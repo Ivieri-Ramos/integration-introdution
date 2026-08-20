@@ -1,0 +1,35 @@
+{
+  "name": "python-dev",
+  "dockerComposeFile": "docker-compose.yaml",
+  "service": "app",
+  "workspaceFolder": "/app",
+
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "version": "latest",
+      "enableNonRootDocker": "true",
+      "moby": "false"
+    }
+  },
+
+  "postCreateCommand": "uv sync",
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.debugpy",
+        "charliermarsh.ruff",
+        "tamasfe.even-better-toml"
+      ]
+    },
+    "jetbrains": {
+      "backend": "PyCharm"
+    }
+  },
+  "remoteUser": "devuser"
+}

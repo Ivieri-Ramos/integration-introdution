@@ -1,0 +1,10 @@
+.venv/
+.uv/
+cmake-build-*/
+build/
+dist/
+__pycache__/
+*.pyd
+.idea/
+.git/
+.gitignore/
