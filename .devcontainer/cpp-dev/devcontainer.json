@@ -1,0 +1,33 @@
+{
+  "name": "cpp-dev",
+  "dockerComposeFile": "docker-compose.yaml",
+  "service": "app",
+  "workspaceFolder": "/app",
+
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "version": "latest",
+      "enableNonRootDocker": "true",
+      "moby": "false"
+    }
+  },
+
+  "postCreateCommand": "uv sync",
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true
+      },
+      "extensions": [
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.cmake-tools",
+        "cschlosser.doxdocgen"
+      ]
+    },
+    "jetbrains": {
+      "backend": "CLion"
+    }
+  },
+  "remoteUser": "devuser"
+}
