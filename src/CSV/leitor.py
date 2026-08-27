@@ -1,4 +1,5 @@
 import math
+import csv
 
 def ler_e_verificar_dados(caminho_arquivo):
     vetor_x = []
@@ -12,9 +13,8 @@ def ler_e_verificar_dados(caminho_arquivo):
     delta_x_referencia = None
     
     with arquivo:
-        for linha in arquivo:
-            partes = linha.strip().split(';')
-            
+        leitor = csv.reader(arquivo, delimiter=';')
+        for partes in leitor:
             if len(partes) == 2:
                 try:
                     novo_x = float(partes[0])
@@ -35,17 +35,3 @@ def ler_e_verificar_dados(caminho_arquivo):
                 vetor_fx.append(novo_fx)
                 
     return vetor_x, vetor_fx
-
-def main():
-    try:
-        x, fx = ler_e_verificar_dados(r"integration-introdution\assets\csv\dados.csv")
-        
-        print("\n--- Correspondência por Índices ---")
-        for i in range(len(x)):
-            print(f"Índice {i}: x = {x[i]:8.4f}  |  f(x) = {fx[i]:8.4f}")
-            
-    except ValueError as e:
-        print(e)
-
-if __name__ == "__main__":
-    main()
