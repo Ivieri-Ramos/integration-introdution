@@ -2,7 +2,7 @@ import sympy as sp
 
 x = sp.Symbol('x')
 
-def ftc_primitiva_conhecida(F:sp.Expr, a, b):
+def ftc_primitiva_conhecida(F:sp.Expr, a, b, variavel = None):
     """
     Aplica o Teorema Fundamental do Cálculo usando uma primitiva conhecida
         Dada uma primitiva F de f, calcula:
@@ -15,11 +15,14 @@ def ftc_primitiva_conhecida(F:sp.Expr, a, b):
        Retorna:
         sp.Expr = valor exato da integral definida
     """
-    F_b = sp.Expr(F.subs(x, b))
-    F_a = sp.Expr(F.subs(x, a))
+    if variavel is None:
+        variavel = sp.Symbol('x')
+
+    F_b = sp.Expr(F.subs(variavel, b))
+    F_a = sp.Expr(F.subs(variavel, a))
     return F_b - F_a
 
-def ftc_integrar(f, a, b):
+def ftc_integrar(f, a, b, variavel = None):
     """
     Aplica o Teorema Fundamental do Cálculo integrando a função original
     Calcula a integral definida ∫ₐᵇ f(x) dx diretamente.
@@ -30,6 +33,8 @@ def ftc_integrar(f, a, b):
     Retorna:
      sp.Expr = valor exato da integral definida
     """
-    return sp.integrate(f, (x, a, b))
+    if variavel is None:
+        variavel = sp.Symbol('x')
+    return sp.integrate(f, (variavel, a, b))
 
 
