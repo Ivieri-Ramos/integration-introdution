@@ -1,0 +1,32 @@
+?start: expr
+
+?expr: expr "+" term -> addition
+    | expr "-" term -> subtraction
+    | term
+
+?term: term "*" unary -> multiplication
+    | term "/" unary -> division
+    | term implicit_factor -> multiplication
+    | unary
+
+?unary: "+" unary -> positive
+    | "-" unary -> negative
+    | expo
+
+?expo: factor "^" unary -> power
+    | factor "**" unary -> power
+    | factor
+
+?factor: NUMBER -> number
+    | implicit_factor
+
+?implicit_factor: CNAME "(" expr ")" -> function_call
+    | CNAME "^" unary "(" expr ")" -> function_power_call
+    | CNAME "**" unary "(" expr ")" -> function_power_call
+    | CNAME -> identifier
+    | "(" expr ")"
+
+%import common.NUMBER
+%import common.CNAME
+%import common.WS
+%ignore WS
