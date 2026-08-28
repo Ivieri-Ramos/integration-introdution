@@ -13,3 +13,4 @@ Dockerfile text eol=lf
 .gitignore text eol=lf
 
 uv.lock linguist-generated=true
+extern/** linguist-vendored
