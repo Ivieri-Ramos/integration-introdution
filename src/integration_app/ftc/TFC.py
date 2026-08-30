@@ -1,40 +1,38 @@
 import sympy as sp
 
-x = sp.Symbol('x')
-
-def ftc_primitiva_conhecida(F:sp.Expr, a, b, variavel = None):
+def ftc_primitiva_conhecida(primitive: sp.Expr, a: sp.Expr, b: sp.Expr, var: sp.Symbol) -> sp.Expr:
     """
-    Aplica o Teorema Fundamental do Cálculo usando uma primitiva conhecida
-        Dada uma primitiva F de f, calcula:
-                              ∫ₐᵇ f(x) dx = F(b) − F(a)
+    Aplica o Teorema Fundamental do Cálculo usando uma primitiva conhecida.
+    Dada uma primitiva F de f, calcula: ∫ₐᵇ f(x) dx = F(b) − F(a)
 
-       F:sp.Expr = primitiva de f
-       a = limite inferior
-       b = limite superior
+    Args:
+       primitive (sp.Expr): Primitiva de f
+       a (sp.Expr): Limite inferior
+       b (sp.Expr): Limite superior
+       var (sp.Symbol): Variável
 
-       Retorna:
-        sp.Expr = valor exato da integral definida
+    Returns:
+        sp.Expr valor exato da integral definida
     """
-    if variavel is None:
-        variavel = sp.Symbol('x')
+    result_b = primitive.subs(var, b)
+    result_a = primitive.subs(var, a)
 
-    F_b = sp.Expr(F.subs(variavel, b))
-    F_a = sp.Expr(F.subs(variavel, a))
-    return F_b - F_a
+    return result_b - result_a
 
-def ftc_integrar(f, a, b, variavel = None):
+def ftc_integrar(f: sp.Expr, a: sp.Expr, b: sp.Expr, var: sp.Symbol) -> sp.Expr:
     """
     Aplica o Teorema Fundamental do Cálculo integrando a função original
     Calcula a integral definida ∫ₐᵇ f(x) dx diretamente.
 
-    f:sp.Expr = função original
-    a, b = limites da integração
+    Args
+        f (sp.Expr): função original
+        a (sp.Expr): Limite inferior
+        b (sp.Expr): Limite superior
+        var (sp.Symbol): Variável
 
-    Retorna:
-     sp.Expr = valor exato da integral definida
+    Returns:
+        sp.Expr Valor exato da integral definida
     """
-    if variavel is None:
-        variavel = sp.Symbol('x')
-    return sp.integrate(f, (variavel, a, b))
+    return sp.integrate(f, (var, a, b))
 
 
