@@ -21,8 +21,6 @@
     | implicit_factor
 
 ?implicit_factor: CNAME "(" expr ")" -> function_call
-    | CNAME "^" unary "(" expr ")" -> function_power_call
-    | CNAME "**" unary "(" expr ")" -> function_power_call
     | CNAME -> identifier
     | "(" expr ")"
 

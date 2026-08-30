@@ -158,30 +158,6 @@ class ExpressionTransformer(Transformer):
         implicit_expr: sp.Expr = self.identifier(token)
         return implicit_expr * value
 
-    def function_power_call(self, token: Token, power: sp.Expr, value: sp.Expr) -> sp.Expr:
-        """
-        Verify if the `token.value` is a function presents in `_ALIAS_FUNCTION_MAP`,
-        if so, returns the correspondent function powered by `power`. Otherwise, verify if
-        the `token.value` is an implicit multiplication, like "sen**2(x)", which
-        returns "(sen ** 2) * (x)", the same as "sen^2(x)".
-
-        Args:
-            token (Token): The token to verify.
-            power (sp.Expr): The value to power the function or expression.
-            value (sp.Expr): The expression inside the parentheses.
-
-        Returns:
-            sp.Expr: The expression which can be a function or an implicit multiplication expression,
-                powered by `power`.
-        """
-        function_name: str = token.value
-
-        if function_name in functions_dict:
-            return functions_dict[function_name](value) ** power
-
-        implicit_expr: sp.Expr = self.identifier(token)
-        return (implicit_expr ** power) * value
-
     def identifier(self, token: Token) -> sp.Expr:
         """
         Verify if the `token.value` is a constant presents in `_ALIAS_CONSTANT_MAP`,
