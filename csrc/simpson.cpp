@@ -1,9 +1,9 @@
-#include <iostream>
 #include <vector>
 #include <string>
 #include <functional>
 #include <stdexcept>
 #include <cmath>
+#include <cstdint>
 #define exprtk_disable_fallthrough
 #include "exprtk.hpp" // biblioteca para validação de funções
 
@@ -37,15 +37,15 @@ public:
     }
 
     // Integração com função, intervalo de [a,b] com n subintervalos
-    static double integrate(const std::function<double(double)>& func, double a, double b, int n) {
-        if (n <= 0 || n % 2 != 0) {
-            throw std::invalid_argument("O numero de intervalos n deve ser  par e positivo.");
+    static double integrate(const std::function<double(double)>& func, const double a, const double b, uint64_t n) {
+        if (n == 0 || n % 2 != 0) {
+            throw std::invalid_argument("O numero de intervalos n deve ser par e diferente de 0.");
         }
 
         double h = (b - a) / n;
         double sum = func(a) + func(b);
 
-        for (int i = 1; i < n; ++i) {
+        for (uint64_t i = 1; i < n; ++i) {
             double x = a + i * h;
             sum += (i % 2 != 0) ? 4.0 * func(x) : 2.0 * func(x);
         }

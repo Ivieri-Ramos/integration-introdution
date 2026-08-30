@@ -1,6 +1,10 @@
 FROM python:3.14-slim AS builder
 
-# TODO: Adicionar as bibliotecas de compilação de C++ quando tiver o código fonte
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    cmake \
+    ninja-build \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
@@ -10,11 +14,14 @@ ENV UV_PROJECT_ENVIRONMENT="/opt/venv"
 
 COPY pyproject.toml uv.lock ./
 
-RUN --mount=from=ghcr.io/astral-sh/uv:latest,source=/uv,target=/bin/uv \
-    --mount=type=cache,target=/root/.cache/uv \
-    /bin/uv sync --frozen --no-install-project
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-install-project
 
+COPY CMakeLists.txt ./
 COPY csrc/ ./csrc/
+COPY extern/ ./extern/
+
+RUN VIRTUAL_ENV=/opt/venv uv pip install --no-deps .
 
 
 FROM python:3.14-slim AS prod
@@ -23,13 +30,18 @@ RUN useradd -m -s /bin/bash appuser
 
 RUN pip uninstall -y pip setuptools wheel
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libstdc++6 \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 COPY --from=builder /opt/venv /opt/venv
 
 ENV PATH="/opt/venv/bin:$PATH"
 
-COPY src/ ./src/
+COPY assets/ ./assets/
+COPY src/integration_app ./integration_app
 COPY main.py ./
 
 USER appuser
