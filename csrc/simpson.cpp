@@ -54,7 +54,7 @@ public:
     }
 
     // 3. Integração com validação de string de expressão via ExprTk, lê a expressão digitada no terminal
-    static double integrate(const std::string& expression_str, double a, double b, int n, const std::string& var_name = "x") {
+    static double integrate(const std::string& expression_str, const double a, const double b, uint64_t n, const std::string& var_name = "x") {
         double x_val = 0.0;
         
         // Interpreta os elementos escritos
