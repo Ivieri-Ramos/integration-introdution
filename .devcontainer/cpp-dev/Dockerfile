@@ -1,4 +1,4 @@
-from python:3.14-slim AS cpp-dev
+from python:3.12-slim AS cpp-dev
 
 RUN pip uninstall -y pip setuptools wheel
 
