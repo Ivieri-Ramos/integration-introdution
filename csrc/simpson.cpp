@@ -61,6 +61,7 @@ public:
         exprtk::symbol_table<double> symbol_table;
         symbol_table.add_variable(var_name, x_val);
         symbol_table.add_constants();
+        symbol_table.add_constant("E", std::exp(1.0));
 
         exprtk::expression<double> expression;
         expression.register_symbol_table(symbol_table);
